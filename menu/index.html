@@ -1,0 +1,268 @@
+<html>
+  <head>
+    <title>Home</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+
+      html,
+      body {
+        max-width: 100vw;
+        overflow-x: hidden;
+        color: black;
+      }
+
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+        /* display: flex; */
+        /* justify-content: center;
+        align-items: center; */
+        height: 100vh;
+        /* flex-direction: column; */
+        font-family: "Roboto", Arial, Helvetica, sans-serif;
+      }
+
+      nav {
+        width: 100%;
+        padding: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      }
+
+      nav a {
+        text-decoration: none;
+        color: black;
+        padding: 0 5px;
+        font-size: 1rem;
+        text-transform: uppercase;
+      }
+
+      nav a.active {
+        font-weight: bold;
+      }
+
+      main {
+        margin-top: 200px;
+        max-width: 800px;
+        display: grid;
+        margin: 100px auto 0 auto;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      }
+
+      .menu-item {
+        text-align: center;
+        padding: 20px;
+        max-width: 400px;
+        margin: 0 auto;
+      }
+
+      .menu-item-image {
+        max-width: 100%;
+        height: auto;
+      }
+
+      .menu-item-title {
+        font-size: 18px;
+        margin: 10px 0;
+      }
+
+      .menu-item-description {
+        text-align: left;
+        /* text-align: center; */
+      }
+
+      .menu-item-price {
+        font-size: 16px;
+        color: #888;
+        padding-bottom: 10px;
+        margin-top: 5px;
+      }
+
+      .checkout-button,
+      .add-to-cart-button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .add-to-cart-button:hover,
+      .checkout-button:hover {
+        background-color: #0056b3;
+      }
+
+      #dialog-addToCart {
+        margin: 0 auto;
+        transform: translateY(150px);
+        min-width: 400px;
+        min-height: 100px;
+        align-items: center;
+      }
+
+      #cart-success {
+        width: 100%;
+        height: 100px;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body>
+    <nav>
+      <div id="nav-left">
+        <a href="/">
+          <i fill="black" class="far fa-solid fa-burger"></i>
+        </a>
+        <a href="/menu" class="active">Menu</a>
+      </div>
+      <div id="nav-right">
+        <a href="/login">Login</a>
+        <a href="/signup">Signup</a>
+      </div>
+    </nav>
+
+    <main>
+      <div class="menu-item">
+        <img
+          src="/assets/burger1.jpg"
+          alt="Product Image"
+          class="menu-item-image"
+        />
+        <h2 class="menu-item-title">SouceMe</h2>
+        <p class="menu-item-description">
+          200g of fresh beef meat, <br />
+          chedar cheese, lettuce, <br />
+          tomatos, pickles, onions <br />
+          and BurgerMe souce
+        </p>
+        <p class="menu-item-price">€6.99</p>
+        <button
+          class="add-to-cart-button"
+          data-burger="1"
+          data-price="€6.99"
+          data-title="SouceMe"
+        >
+          Add to Cart
+        </button>
+      </div>
+
+      <div class="menu-item">
+        <img
+          src="/assets/burger2.jpg"
+          alt="Product Image"
+          class="menu-item-image"
+        />
+        <h2 class="menu-item-title">SmashMe</h2>
+        <p class="menu-item-description">
+          200g of fresh beef meat, <br />
+          double chedar cheese, lettuce,<br />
+          pickles, with grilled onions
+        </p>
+        <p class="menu-item-price">€7.99</p>
+        <button
+          class="add-to-cart-button"
+          data-burger="2"
+          data-title="SmashMe"
+          data-price="€7.99"
+        >
+          Add to Cart
+        </button>
+      </div>
+
+      <dialog id="dialog-addToCart">
+        <div id="checkout-item" class="menu-item">
+          <img
+            id="cart-image"
+            src="/assets/burger1.jpg"
+            alt="Cart Image"
+            class="menu-item-image"
+          />
+          <h2 class="cart-item-title menu-item-title"></h2>
+          <p class="menu-item-description">
+            200g of fresh beef meat, <br />
+            chedar cheese, <br />
+            lettuce, tomatos, pickles, onions <br />
+            and BurgerMe souce
+          </p>
+          <p class="cart-item-price menu-item-price">€6.99</p>
+          <button class="checkout-button">Checkout</button>
+        </div>
+
+        <div id="cart-success">
+          Thank you for having a great meal with BurgerMe!
+        </div>
+      </dialog>
+    </main>
+
+    <script>
+      let burgerInCart;
+      let priceInCart;
+      let titleInCart;
+
+      const addToCartButtons = document.querySelectorAll(
+        "button.add-to-cart-button"
+      );
+      const dialog = document.querySelector("#dialog-addToCart");
+      const cartImage = document.querySelector("#cart-image");
+      const cartItemPrice = document.querySelector(".cart-item-price");
+      const cartItemTitle = document.querySelector(".cart-item-title");
+
+      const checkoutItem = document.querySelector("#checkout-item");
+      const checkoutButton = checkoutItem.querySelector("button");
+      const cartSuccess = document.querySelector("#cart-success");
+
+      addToCartButtons.forEach((el) => {
+        el.addEventListener("click", () => {
+          burgerInCart = el.dataset.burger;
+          priceInCart = el.dataset.price;
+          titleInCart = el.dataset.title;
+          cartItemPrice.innerHTML = priceInCart;
+          cartItemTitle.innerHTML = titleInCart;
+          cartImage.setAttribute("src", `/assets/burger${burgerInCart}.jpg`);
+
+          cartSuccess.style.display = "none";
+          dialog.showModal();
+        });
+      });
+
+      checkoutButton.addEventListener("click", () => {
+        checkoutItem.style.display = "none";
+        cartSuccess.style.display = "inline-flex";
+      });
+
+      dialog.addEventListener("close", function (event) {
+        checkoutItem.style.display = "initial";
+        // checkoutItem.style.display = "block";
+        cartSuccess.style.display = "none";
+      });
+    </script>
+  </body>
+</html>
