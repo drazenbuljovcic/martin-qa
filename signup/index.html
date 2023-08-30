@@ -131,10 +131,29 @@
         cursor: pointer;
         margin: 1px;
         border-radius: 50%;
+        height: 35px;
+        transform: scale(0.9);
       }
 
       .password-field-container > button.password-toggle-button > i {
         transform: scale(1.5);
+      }
+
+      .form-group-error {
+        font-size: 12px;
+        margin-top: 5px;
+        color: red;
+      }
+
+      #password-form-group-error,
+      #confirm-password-form-group-error {
+        display: none;
+      }
+
+      #registration-confirmation-message {
+        display: none;
+        text-align: center;
+        margin-top: 20px;
       }
     </style>
     <link
@@ -159,7 +178,7 @@
     </nav>
 
     <main>
-      <form action="#" method="POST">
+      <form action="#" method="POST" id="signup-form">
         <div class="form-group">
           <label htmlFor="username">Username:</label>
           <input
@@ -193,6 +212,13 @@
           <button type="button" class="password-toggle-button">
             <i class="far fa-eye"></i>
           </button>
+          <p class="form-group-error" id="password-form-group-error">
+            Password must be at least 6 characters long <br />
+            Password must contain at least one uppercase and lowercase letter
+            <br />
+            Password must be alphanumeric <br />
+            Password must contain at least one special symbol
+          </p>
         </div>
 
         <label htmlFor="confirm-password">Confirm Password:</label>
@@ -211,9 +237,17 @@
           >
             <i fill="black" class="far fa-eye"></i>
           </button>
+
+          <p class="form-group-error" id="confirm-password-form-group-error">
+            Passwords must match
+          </p>
         </div>
 
         <button type="submit">Register</button>
+
+        <p id="registration-confirmation-message">
+          Thank you for your with BurgerMe! <a href="/martin-qa/login">Login</a>
+        </p>
       </form>
     </main>
 
@@ -221,6 +255,47 @@
       const passwordToggleButtons = document.querySelectorAll(
         ".password-toggle-button"
       );
+
+      const passwordInput = document.querySelector(
+        "input[type=password]#password"
+      );
+      const passwordFormGroupError = document.querySelector(
+        "#password-form-group-error"
+      );
+
+      const confirmPasswordInput = document.querySelector(
+        "input[type=password]#confirm-password"
+      );
+      const confirmPasswordFormGroupError = document.querySelector(
+        "#confirm-password-form-group-error"
+      );
+
+      const registrationConfirmationMessage = document.querySelector(
+        "#registration-confirmation-message"
+      );
+
+      passwordInput.addEventListener("blur", (e) => {
+        const value = e.target.value;
+
+        // 6 chars
+        // alphanumeric
+        // uppercase and lowercase
+        // special characters
+        const isValid =
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#!?$%^&+=]).{6,}$/.test(value);
+
+        passwordFormGroupError.style.display = isValid ? "none" : "initial";
+      });
+      confirmPasswordInput.addEventListener("blur", (e) => {
+        const value = e.target.value;
+        const passwordValue = passwordInput.value;
+
+        const isValid = value === passwordValue;
+
+        confirmPasswordFormGroupError.style.display = isValid
+          ? "none"
+          : "initial";
+      });
 
       passwordToggleButtons.forEach((button) => {
         button.addEventListener("click", () => {
@@ -240,6 +315,14 @@
             button.firstElementChild.classList.add("fa-eye-slash");
           }
         });
+      });
+
+      const signupForm = document.querySelector("#signup-form");
+
+      signupForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        registrationConfirmationMessage.style.display = "block";
       });
     </script>
   </body>
