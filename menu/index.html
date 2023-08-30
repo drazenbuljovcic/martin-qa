@@ -75,9 +75,18 @@
         margin: 0 auto;
       }
 
+      .menu-item-image-wrapper {
+        position: relative;
+        width: 350px;
+        height: 300px;
+        overflow: hidden;
+      }
+
       .menu-item-image {
-        max-width: 100%;
-        height: auto;
+        position: absolute;
+        height: 350px;
+        transform: translateX(-50%) translateY(-5%);
+        transform-origin: center;
       }
 
       .menu-item-title {
@@ -86,8 +95,8 @@
       }
 
       .menu-item-description {
-        text-align: left;
-        /* text-align: center; */
+        text-align: center;
+        height: 85px;
       }
 
       .menu-item-price {
@@ -151,11 +160,41 @@
 
     <main>
       <div class="menu-item">
-        <img
-          src="/martin-qa/assets/burger1.jpg"
-          alt="Product Image"
-          class="menu-item-image"
-        />
+        <div class="menu-item-image-wrapper">
+          <img
+            src="/martin-qa/assets/burger1.jpg"
+            alt="Product Image"
+            class="menu-item-image"
+          />
+        </div>
+        <h2 class="menu-item-title">SmashMe</h2>
+        <p class="menu-item-description">
+          200g of fresh beef meat, <br />
+          double chedar cheese, lettuce,<br />
+          pickles, with grilled onions
+        </p>
+        <p class="menu-item-price">€7.99</p>
+        <button
+          class="add-to-cart-button"
+          data-burger="1"
+          data-title="SmashMe"
+          data-price="7.99"
+          data-description="200g of fresh beef meat, <br />
+          double chedar cheese, lettuce,<br />
+          pickles, with grilled onions"
+        >
+          Add to Cart
+        </button>
+      </div>
+
+      <div class="menu-item">
+        <div class="menu-item-image-wrapper">
+          <img
+            src="/martin-qa/assets/burger2.jpg"
+            alt="Product Image"
+            class="menu-item-image"
+          />
+        </div>
         <h2 class="menu-item-title">SouceMe</h2>
         <p class="menu-item-description">
           200g of fresh beef meat, <br />
@@ -166,53 +205,47 @@
         <p class="menu-item-price">€6.99</p>
         <button
           class="add-to-cart-button"
-          data-burger="1"
-          data-price="€6.99"
-          data-title="SouceMe"
-        >
-          Add to Cart
-        </button>
-      </div>
-
-      <div class="menu-item">
-        <img
-          src="/martin-qa/assets/burger2.jpg"
-          alt="Product Image"
-          class="menu-item-image"
-        />
-        <h2 class="menu-item-title">SmashMe</h2>
-        <p class="menu-item-description">
-          200g of fresh beef meat, <br />
-          double chedar cheese, lettuce,<br />
-          pickles, with grilled onions
-        </p>
-        <p class="menu-item-price">€7.99</p>
-        <button
-          class="add-to-cart-button"
           data-burger="2"
-          data-title="SmashMe"
-          data-price="€7.99"
+          data-price="6.99"
+          data-title="SouceMe"
+          data-description="200g of fresh beef meat,<br />
+          chedar cheese, lettuce, <br />
+          tomatos, pickles, onions <br />
+          and BurgerMe souce"
         >
           Add to Cart
         </button>
       </div>
 
       <dialog id="dialog-addToCart">
+        <i
+          id="dialog-close"
+          class="fa fa-close"
+          style="margin-left: 95%; margin-top: 10px; cursor: pointer"
+        ></i>
+
         <div id="checkout-item" class="menu-item">
-          <img
-            id="cart-image"
-            src="/martin-qa/assets/burger1.jpg"
-            alt="Cart Image"
-            class="menu-item-image"
-          />
+          <div class="menu-item-image-wrapper">
+            <img
+              id="cart-image"
+              src=""
+              alt="Cart Image"
+              class="menu-item-image"
+            />
+          </div>
           <h2 class="cart-item-title menu-item-title"></h2>
-          <p class="menu-item-description">
-            200g of fresh beef meat, <br />
-            chedar cheese, <br />
-            lettuce, tomatos, pickles, onions <br />
-            and BurgerMe souce
-          </p>
-          <p class="cart-item-price menu-item-price">€6.99</p>
+          <p class="cart-item-description menu-item-description"></p>
+
+          <hr style="margin-bottom: 10px" />
+
+          <div id="cart-extra">
+            <div id="cart-extra-item">
+              <span>Add Extra Fries</span>
+              <input type="checkbox" id="cart-fries-checkbox" />
+            </div>
+          </div>
+
+          <p class="cart-item-price menu-item-price"></p>
           <button class="checkout-button">Checkout</button>
         </div>
 
@@ -223,17 +256,28 @@
     </main>
 
     <script>
+      const currency = "€";
+      const priceForFries = 3;
+
       let burgerInCart;
       let priceInCart;
       let titleInCart;
+      let descriptionInCart;
 
       const addToCartButtons = document.querySelectorAll(
         "button.add-to-cart-button"
       );
       const dialog = document.querySelector("#dialog-addToCart");
+      const dialogClose = document.querySelector("#dialog-close");
+
       const cartImage = document.querySelector("#cart-image");
       const cartItemPrice = document.querySelector(".cart-item-price");
       const cartItemTitle = document.querySelector(".cart-item-title");
+      const cartItemDescription = document.querySelector(
+        ".cart-item-description"
+      );
+
+      const friesCheckbox = document.querySelector("#cart-fries-checkbox");
 
       const checkoutItem = document.querySelector("#checkout-item");
       const checkoutButton = checkoutItem.querySelector("button");
@@ -244,9 +288,14 @@
           burgerInCart = el.dataset.burger;
           priceInCart = el.dataset.price;
           titleInCart = el.dataset.title;
-          cartItemPrice.innerHTML = priceInCart;
+          descriptionInCart = el.dataset.description;
+          cartItemPrice.innerHTML = `${currency}${priceInCart}`;
           cartItemTitle.innerHTML = titleInCart;
-          cartImage.setAttribute("src", `/assets/burger${burgerInCart}.jpg`);
+          cartItemDescription.innerHTML = descriptionInCart;
+          cartImage.setAttribute(
+            "src",
+            `/martin-qa/assets/burger${burgerInCart}.jpg`
+          );
 
           cartSuccess.style.display = "none";
           dialog.showModal();
@@ -258,10 +307,26 @@
         cartSuccess.style.display = "inline-flex";
       });
 
+      friesCheckbox.addEventListener("change", () => {
+        if (friesCheckbox.checked) {
+          priceInCart = parseFloat(priceInCart) + priceForFries;
+          cartItemPrice.innerHTML = `${currency}${priceInCart}`;
+        } else {
+          priceInCart = parseFloat(priceInCart) - priceForFries;
+          cartItemPrice.innerHTML = `${currency}${priceInCart}`;
+        }
+      });
+
+      dialogClose.addEventListener("click", () => {
+        dialog.close();
+      });
+
       dialog.addEventListener("close", function (event) {
         checkoutItem.style.display = "initial";
-        // checkoutItem.style.display = "block";
-        cartSuccess.style.display = "none";
+        checkoutItem.style.display = "block";
+
+        cartImage.setAttribute("src", "");
+        // friesCheckbox.checked = false;
       });
     </script>
   </body>
