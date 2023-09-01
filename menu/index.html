@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Home</title>
+    <title>BurgerMe | Menu</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -28,11 +28,7 @@
         background-color: #f2f2f2;
         margin: 0;
         padding: 0;
-        /* display: flex; */
-        /* justify-content: center;
-        align-items: center; */
         height: 100vh;
-        /* flex-direction: column; */
         font-family: "Roboto", Arial, Helvetica, sans-serif;
       }
 
@@ -40,20 +36,26 @@
         width: 100%;
         padding: 20px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         position: fixed;
         top: 0;
         left: 0;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to bottom, transparent, #0000003a);
+        z-index: 1;
       }
 
       nav a {
         text-decoration: none;
-        color: black;
         padding: 0 5px;
         font-size: 1rem;
         text-transform: uppercase;
+        color: black;
+      }
+
+      #nav-mid {
+        margin: 0 50px;
       }
 
       nav a.active {
@@ -146,16 +148,17 @@
   </head>
   <body>
     <nav>
-      <div id="nav-left">
+      <a href="/martin-qa/menu">Menu</a>
+      <b>|</b>
+      <div id="nav-mid">
         <a href="/martin-qa">
+          <span>BurgerMe</span>
           <i fill="black" class="far fa-solid fa-burger"></i>
         </a>
-        <a href="/martin-qa/menu" class="active">Menu</a>
       </div>
-      <div id="nav-right">
-        <a href="/martin-qa/login">Login</a>
-        <a href="/martin-qa/signup">Signup</a>
-      </div>
+      <b>|</b>
+      <a href="/martin-qa/login">Login</a>
+      <a href="/martin-qa/signup">Signup</a>
     </nav>
 
     <main>
@@ -326,7 +329,7 @@
         checkoutItem.style.display = "block";
 
         cartImage.setAttribute("src", "");
-        // friesCheckbox.checked = false;
+        friesCheckbox.checked = false;
       });
     </script>
   </body>

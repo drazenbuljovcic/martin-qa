@@ -1,6 +1,6 @@
 <html>
   <head>
-    <title>Home</title>
+    <title>BurgerMe | Register</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -39,21 +39,26 @@
         width: 100%;
         padding: 20px;
         display: flex;
-        justify-content: space-between;
+        justify-content: center;
         align-items: center;
         position: fixed;
         top: 0;
         left: 0;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        background: linear-gradient(to bottom, transparent, #0000003a);
         z-index: 1;
       }
 
       nav a {
         text-decoration: none;
-        color: black;
         padding: 0 5px;
         font-size: 1rem;
         text-transform: uppercase;
+        color: black;
+      }
+
+      #nav-mid {
+        margin: 0 50px;
       }
 
       nav a.active {
@@ -146,7 +151,8 @@
       }
 
       #password-form-group-error,
-      #confirm-password-form-group-error {
+      #confirm-password-form-group-error,
+      #username-form-group-error {
         display: none;
       }
 
@@ -165,16 +171,17 @@
   </head>
   <body>
     <nav>
-      <div id="nav-left">
+      <a href="/martin-qa/menu">Menu</a>
+      <b>|</b>
+      <div id="nav-mid">
         <a href="/martin-qa">
+          <span>BurgerMe</span>
           <i fill="black" class="far fa-solid fa-burger"></i>
         </a>
-        <a href="/martin-qa/menu">Menu</a>
       </div>
-      <div id="nav-right">
-        <a href="/martin-qa/login">Login</a>
-        <a href="/martin-qa/signup" class="active">Signup</a>
-      </div>
+      <b>|</b>
+      <a href="/martin-qa/login">Login</a>
+      <a href="/martin-qa/signup">Signup</a>
     </nav>
 
     <main>
@@ -188,6 +195,10 @@
             placeholder="Username"
             required
           />
+
+          <p class="form-group-error" id="username-form-group-error">
+            Username must be between 3 and 50 characters
+          </p>
         </div>
         <div class="form-group">
           <label htmlFor="email">Email:</label>
@@ -212,6 +223,7 @@
           <button type="button" class="password-toggle-button">
             <i class="far fa-eye"></i>
           </button>
+
           <p class="form-group-error" id="password-form-group-error">
             Password must be at least 6 characters long <br />
             Password must contain at least one uppercase and lowercase letter
@@ -256,6 +268,12 @@
         ".password-toggle-button"
       );
 
+      const usernameInput = document.querySelector(
+        "input[type=text]#username"
+      );
+      const usernameFormGroupError = document.querySelector(
+        "#username-form-group-error"
+      );
       const passwordInput = document.querySelector(
         "input[type=password]#password"
       );
@@ -274,7 +292,12 @@
         "#registration-confirmation-message"
       );
 
-      passwordInput.addEventListener("blur", (e) => {
+      usernameInput.addEventListener("blur", e => {
+        const value = e.target.value;
+        const isInvalid = value.length < 3 || value.length > 50;
+        usernameFormGroupError.style.display = isInvalid ? "initial" : "none";
+      })
+      passwordInput.addEventListener("blur", e => {
         const value = e.target.value;
 
         // 6 chars
