@@ -1,7 +1,22 @@
 <html>
   <head>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-957NZN1TFD"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+
+      gtag("config", "G-957NZN1TFD");
+    </script>
+
     <title>BurgerMe | Register</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -62,12 +77,12 @@
         margin: 0 50px;
       }
 
-      @media screen and (max-width:768px) {
+      @media screen and (max-width: 768px) {
         #nav-mid {
           margin: 0 20px;
         }
       }
-      
+
       nav a.active {
         font-weight: bold;
       }
@@ -275,9 +290,7 @@
         ".password-toggle-button"
       );
 
-      const usernameInput = document.querySelector(
-        "input[type=text]#username"
-      );
+      const usernameInput = document.querySelector("input[type=text]#username");
       const usernameFormGroupError = document.querySelector(
         "#username-form-group-error"
       );
@@ -299,12 +312,12 @@
         "#registration-confirmation-message"
       );
 
-      usernameInput.addEventListener("blur", e => {
+      usernameInput.addEventListener("blur", (e) => {
         const value = e.target.value;
         const isInvalid = value.length < 3 || value.length > 50;
         usernameFormGroupError.style.display = isInvalid ? "initial" : "none";
-      })
-      passwordInput.addEventListener("blur", e => {
+      });
+      passwordInput.addEventListener("blur", (e) => {
         const value = e.target.value;
 
         // 6 chars
